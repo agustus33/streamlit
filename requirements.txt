@@ -1,4 +1,3 @@
 streamlit==1.7.0
-pandas==3.8.13
 pickleshare==0.7.5
 pandas==1.4.1
