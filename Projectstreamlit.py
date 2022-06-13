@@ -69,6 +69,11 @@ def main():
         <h2 style="color:white;text-align:center;"> DIABETES NEGATIVE</h2>
         </div>
         """   
+    safe_html_except = """  
+        <div style="background-color:#F4D03F; padding:10px >
+        <h2 style="color:white;text-align:center;"> ENTER VALID DATA</h2>
+        </div>
+        """   
     st.markdown(html_temp, unsafe_allow_html = True)
 
     option = st.selectbox(
@@ -81,57 +86,64 @@ def main():
         pcv = st.text_input("PCV")
 
         pred = st.button("Predict the disease")
-        if pred :
-            output = predict_anemia(sex,rbc,pcv,hgb)
-            st.success('The result is {}'.format(output))
-            if output == 1:
-                st.markdown(safe_html_one,unsafe_allow_html=True)
-                anemia_foodchart = open("Foodchart_Anemia.html", 'r', encoding='utf-8')
-                source_code_anemia = anemia_foodchart.read() 
-                components.html(source_code_anemia, height = 1400)
-                df_anemia = convert_df(anemia_chart_csv)
-                st.download_button(label="Download Anemia Report",data=df_anemia,file_name='anemia_foodchart.csv',mime='text/csv',)
-            elif output == 0:
-                st.markdown(warn_html_one,unsafe_allow_html=True)
+        try:
+            if pred :
+                output = predict_anemia(sex,rbc,pcv,hgb)
+                st.success('The result is {}'.format(output))
+                if output == 1:
+                    st.markdown(safe_html_one,unsafe_allow_html=True)
+                    anemia_foodchart = open("Foodchart_Anemia.html", 'r', encoding='utf-8')
+                    source_code_anemia = anemia_foodchart.read() 
+                    components.html(source_code_anemia, height = 1400)
+                    df_anemia = convert_df(anemia_chart_csv)
+                    st.download_button(label="Download Anemia Report",data=df_anemia,file_name='anemia_foodchart.csv',mime='text/csv',)
+                elif output == 0:
+                    st.markdown(warn_html_one,unsafe_allow_html=True)
+        except:
+             st.markdown(safe_html_except,unsafe_allow_html=True)
     elif option == 'Leukemia' :
         WBC = st.text_input("WBC")
         PLT = st.text_input("PLT")
         pred = st.button("Predict the disease")
-        if pred :
-            output = predict_leukemia(WBC,PLT)
+        try:
+            if pred :
+                output = predict_leukemia(WBC,PLT)
 
-            st.success('The result is {}'.format(output))
-            if output == 1:
-                st.markdown(safe_html_two,unsafe_allow_html=True)
-                leukemia_foodchart = open("Foodchart_Leukemia.html", 'r', encoding='utf-8')
-                source_code_leukemia = leukemia_foodchart.read() 
-                components.html(source_code_leukemia, height = 1400)
-                df_leukemia = convert_df(leukemia_chart_csv)
-                st.download_button(label="Download Leukemia Report",data=df_leukemia ,file_name='leukemia_foodchart.csv',mime='text/csv',)
+                st.success('The result is {}'.format(output))
+                if output == 1:
+                    st.markdown(safe_html_two,unsafe_allow_html=True)
+                    leukemia_foodchart = open("Foodchart_Leukemia.html", 'r', encoding='utf-8')
+                    source_code_leukemia = leukemia_foodchart.read() 
+                    components.html(source_code_leukemia, height = 1400)
+                    df_leukemia = convert_df(leukemia_chart_csv)
+                    st.download_button(label="Download Leukemia Report",data=df_leukemia ,file_name='leukemia_foodchart.csv',mime='text/csv',)
 
             elif output == 0:
                 st.markdown(warn_html_two,unsafe_allow_html=True)      
-
+        except:
+             st.markdown(safe_html_except,unsafe_allow_html=True)
     elif option == 'Diabetes' :
         Glucose = st.text_input("Glucose")
         Bmi = st.text_input("Bmi")
         Age = st.text_input("Age")
         pred = st.button("Predict the disease")
-        if pred :
-            output = predict_diabetes(Glucose, Bmi, Age)
+        try:
+            if pred :
+                output = predict_diabetes(Glucose, Bmi, Age)
 
-            st.success('The result is {}'.format(output))
-            if output == 1:
-                st.markdown(safe_html_three,unsafe_allow_html=True)
-                diabetes_foodchart = open("Foodchart_Diabetes.html", 'r', encoding='utf-8')
-                source_code_diabetes = diabetes_foodchart.read() 
-                components.html(source_code_diabetes, height = 1400)
-                df_diabetes = convert_df(diabetes_chart_csv)
-                st.download_button(label="Download Diabetes Report",data=df_diabetes ,file_name='diabetes_foodchart.csv',mime='text/csv',)
+                st.success('The result is {}'.format(output))
+                if output == 1:
+                    st.markdown(safe_html_three,unsafe_allow_html=True)
+                    diabetes_foodchart = open("Foodchart_Diabetes.html", 'r', encoding='utf-8')
+                    source_code_diabetes = diabetes_foodchart.read() 
+                    components.html(source_code_diabetes, height = 1400)
+                    df_diabetes = convert_df(diabetes_chart_csv)
+                    st.download_button(label="Download Diabetes Report",data=df_diabetes ,file_name='diabetes_foodchart.csv',mime='text/csv',)
 
-            elif output == 0:
-                st.markdown(warn_html_three,unsafe_allow_html=True)  
-
+                elif output == 0:
+                    st.markdown(warn_html_three,unsafe_allow_html=True)  
+        except:
+             st.markdown(safe_html_except,unsafe_allow_html=True)
 
 if __name__=='__main__':
     main()
